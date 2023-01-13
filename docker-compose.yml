@@ -10,7 +10,7 @@ volumes:
 services:
   mysql:
     platform: ${PLATFORM}
-    container_name: ${MYSQ_CONTAINER_NAME}
+    container_name: ${MYSQL_CONTAINER_NAME}
     build:
       context: ./mysql
       args:
@@ -26,5 +26,19 @@ services:
       - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
     ports:
       - "${MYSQL_DB_PORT}:3306"
+    networks:
+      - 99techdb
+  postgres:
+    platform: ${PLATFORM}
+    container_name: ${POSTGRESQL_CONTAINER_NAME}
+    image: postgres:${POSTGRESQL_VERSION}
+    environment:
+      - POSTGRES_USER=${POSTGRESQL_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD}
+      - PGDATA=/data/postgres
+    volumes:
+      - ${POSTGRESQL_DATA_PATH_HOST}:/data/postgres
+    ports:
+      - "${POSTGRESQL_PORT}:5432"
     networks:
       - 99techdb
