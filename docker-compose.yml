@@ -51,7 +51,10 @@ services:
   postgres:
     platform: ${PLATFORM}
     container_name: ${POSTGRESQL_CONTAINER_NAME}
-    image: postgres:${POSTGRESQL_VERSION}
+    build:
+      context: ./postgres
+      args:
+        - VERSION=${POSTGRESQL_VERSION}
     environment:
       - POSTGRES_USER=${POSTGRESQL_USERNAME}
       - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD}
