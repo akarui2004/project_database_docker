@@ -28,6 +28,26 @@ services:
       - "${MYSQL_DB_PORT}:3306"
     networks:
       - 99techdb
+  mariadb:
+    platform: ${PLATFORM}
+    container_name: ${MARIADB_CONTAINER_NAME}
+    build:
+      context: ./mariadb
+      args:
+        - MARIADB_VERSION=${MARIADB_VERSION}
+    environment:
+      - MYSQL_DATABASE=${MARIADB_DB_NAME}
+      - MYSQL_USER=${MARIADB_USERNAME}
+      - MYSQL_PASSWORD=${MARIADB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+      - TZ=${APP_TIMEZONE}
+    volumes:
+      - ${MARIADB_DATA_PATH_HOST}/mariadb:/var/lib/mysql
+      - ${MARIADB_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
+    ports:
+      - "${MARIADB_DB_PORT}:3306"
+    networks:
+      - 99techdb
   postgres:
     platform: ${PLATFORM}
     container_name: ${POSTGRESQL_CONTAINER_NAME}
