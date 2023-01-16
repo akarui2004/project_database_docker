@@ -1,7 +1,7 @@
 version: '3.8'
 
 networks:
-  99techdb:
+  ptechdb:
     driver: ${APP_NETWORK_DRIVER}
 volumes:
   mysql:
@@ -27,7 +27,7 @@ services:
     ports:
       - "${MYSQL_DB_PORT}:3306"
     networks:
-      - 99techdb
+      - ptechdb
   mariadb:
     platform: ${PLATFORM}
     container_name: ${MARIADB_CONTAINER_NAME}
@@ -47,7 +47,7 @@ services:
     ports:
       - "${MARIADB_DB_PORT}:3306"
     networks:
-      - 99techdb
+      - ptechdb
   postgres:
     platform: ${PLATFORM}
     container_name: ${POSTGRESQL_CONTAINER_NAME}
@@ -61,7 +61,7 @@ services:
     ports:
       - "${POSTGRESQL_PORT}:5432"
     networks:
-      - 99techdb
+      - ptechdb
   mongo:
     platform: ${PLATFORM}
     build: ./mongodb
@@ -74,4 +74,4 @@ services:
       - ${MONGODB_DATA_PATH_HOST}/mongo:/data/db
       - ${MONGODB_DATA_PATH_HOST}/mongo_config:/data/configdb
     networks:
-      - 99techdb
+      - ptechdb
