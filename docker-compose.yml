@@ -62,3 +62,16 @@ services:
       - "${POSTGRESQL_PORT}:5432"
     networks:
       - 99techdb
+  mongo:
+    platform: ${PLATFORM}
+    build: ./mongodb
+    ports:
+      - "${MONGODB_PORT}:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME:${MONGODB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD:${MONGODB_ROOT_PASSWORD}
+    volumes:
+      - ${MONGODB_DATA_PATH_HOST}/mongo:/data/db
+      - ${MONGODB_DATA_PATH_HOST}/mongo_config:/data/configdb
+    networks:
+      - 99techdb
