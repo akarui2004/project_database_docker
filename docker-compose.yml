@@ -68,13 +68,25 @@ services:
   mongo:
     platform: ${PLATFORM}
     build: ./mongodb
+    restart: always
     ports:
       - "${MONGODB_PORT}:27017"
     environment:
-      - MONGO_INITDB_ROOT_USERNAME:${MONGODB_ROOT_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD:${MONGODB_ROOT_PASSWORD}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
     volumes:
       - ${MONGODB_DATA_PATH_HOST}/mongo:/data/db
       - ${MONGODB_DATA_PATH_HOST}/mongo_config:/data/configdb
+    networks:
+      - ptechdb
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGODB_ROOT_USERNAME}
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGODB_ROOT_PASSWORD}
+      - ME_CONFIG_MONGODB_URL=mongodb://${MONGODB_ROOT_USERNAME}:${MONGODB_ROOT_PASSWORD}@mongo:27017/${MONGODB_ROOT_USERNAME}
     networks:
       - ptechdb
