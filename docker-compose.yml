@@ -61,6 +61,7 @@ services:
       - PGDATA=/data/postgres
     volumes:
       - ${POSTGRESQL_DATA_PATH_HOST}/postgres:/data/postgres
+      - ${POSTGRESQL_PATH_HOST}/postgres.conf:/data/postgres/postgresql.conf
     ports:
       - "${POSTGRESQL_PORT}:5432"
     networks:
